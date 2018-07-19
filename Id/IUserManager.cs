@@ -11,6 +11,8 @@ namespace Owin_Auth.Id
         Task<UserRegistrationResult> RegisterNewUser(DataContext context,string username, string password, string email);
 
         Task<(LoginResult status, User user)> LoginUser(DataContext context,string requestUsername, string requestPassword);
+        Task<User> GetUserById(DataContext context, int requestUsername);
+
     }
 
     public enum UserRegistrationResult

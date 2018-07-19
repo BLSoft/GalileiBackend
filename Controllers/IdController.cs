@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Owin_Auth.Id;
 using Owin_Auth.Utils;
 
@@ -35,7 +36,7 @@ namespace Owin_Auth.Controllers
         {
             try
             {
-                if (CheckNull(request.Username) || CheckNull(request.Password) || CheckNull(request.Email))
+                if (request.Username.CheckNull() || request.Password.CheckNull() || request.Email.CheckNull())
                 {
                     return BadRequest(new {message = "id.reg.blankfields"});
                 }
@@ -56,7 +57,7 @@ namespace Owin_Auth.Controllers
             }
             catch (Exception e)
             {
-                return ReportError(e);
+                return this.ReportError(e);
             }
         }
 
@@ -66,7 +67,7 @@ namespace Owin_Auth.Controllers
         {
             try
             {
-                if (CheckNull(request.Username) || CheckNull(request.Password))
+                if (request.Username.CheckNull() || request.Password.CheckNull())
                 {
                     return BadRequest(new {message = "id.auth.blankfields"});
                 }
@@ -78,10 +79,11 @@ namespace Owin_Auth.Controllers
                     var claims = new[]
                     {
                         new Claim(ClaimTypes.Name, request.Username),
+                        new Claim(JwtRegisteredClaimNames.Jti,new Guid().ToString()), 
                         new Claim("Role",resp.user.Role.ToString()) 
                     };
 
-                    JwtSecurityToken token = new JwtSecurityToken(_config["Tokens:Issuer"],_config["Tokens:Audience"],claims,DateTime.Now,DateTime.Now.AddMinutes(15));
+                    JwtSecurityToken token = new JwtSecurityToken(_config["Tokens:Issuer"],_config["Tokens:Audience"],claims,DateTime.Now,DateTime.Now.AddMinutes(15),new SigningCredentials(new SymmetricSecurityKey(Convert.FromBase64String(_config["Tokens:SecretKey"])),SecurityAlgorithms.HmacSha256));
 
                     var result = new { Token = new JwtSecurityTokenHandler().WriteToken(token), Expires = 900};
                     return Ok(result);
@@ -109,21 +111,13 @@ namespace Owin_Auth.Controllers
             }
             catch (Exception e)
             {
-                return ReportError(e);
+                return this.ReportError(e);
             }
 
         }
 
-        //Common error reporter
-        IActionResult ReportError(Exception e)
-        {
-            return BadRequest(new {message = $"err.custom {e.GetType().ToString()}:{e.Message}"});
-        }
-        //NullCheck
-        public bool CheckNull(string o)
-        {
-            return o == null || o.Trim().Length == 0;
-        }
+        
+        
 
         public class LoginRequest
         {

@@ -33,5 +33,17 @@ namespace Owin_Auth.Id
             var ifExsist = await context.UserValidations.FirstOrDefaultAsync(validation => validation.LongId == id);
             return ifExsist != null;
         }
+
+        public async Task<string> GetIdForUsername(DataContext context, string username)
+        {
+            var val = await context.UserValidations.FirstOrDefaultAsync(validation => validation.Username == username);
+            return val.LongId;
+        }
+
+        public async Task<UserValidation> GetValidationForUsername(DataContext context, string username)
+        {
+            var val = await context.UserValidations.FirstOrDefaultAsync(validation => validation.Username == username);
+            return val;
+        }
     }
 }

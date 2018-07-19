@@ -90,5 +90,11 @@ namespace Owin_Auth.Id
                 throw e;
             }
         }
+
+        public async Task<User> GetUserById(DataContext context, int userId)
+        {
+            var usr = await context.Users.FirstOrDefaultAsync(user => user.UserId == userId);
+            return usr;
+        }
     }
 }

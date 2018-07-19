@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,7 +33,7 @@ namespace Owin_Auth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAuthentication().AddJwtBearer(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -43,6 +44,7 @@ namespace Owin_Auth
                         ValidateLifetime = true,
                         ValidAudience = Configuration["Tokens:Audience"]
                     };
+                    
                     
                   
                 });
@@ -74,7 +76,7 @@ namespace Owin_Auth
                 app.UseHsts();
             }
             //Auth
-            
+            app.UseAuthentication();
 
 
             //app.UseHttpsRedirection();

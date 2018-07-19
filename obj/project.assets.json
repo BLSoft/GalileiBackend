@@ -12230,11 +12230,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programozas\\Code\\_Tests\\C#\\Owin_Auth\\Galilei.Server.csproj",
+      "projectUniqueName": "D:\\Programozas\\Code\\_Projects\\Galilei\\GalileiBackend\\Galilei.Server.csproj",
       "projectName": "Galilei.Server",
-      "projectPath": "D:\\Programozas\\Code\\_Tests\\C#\\Owin_Auth\\Galilei.Server.csproj",
+      "projectPath": "D:\\Programozas\\Code\\_Projects\\Galilei\\GalileiBackend\\Galilei.Server.csproj",
       "packagesPath": "C:\\Users\\Barrow099\\.nuget\\packages\\",
-      "outputPath": "D:\\Programozas\\Code\\_Tests\\C#\\Owin_Auth\\obj\\",
+      "outputPath": "D:\\Programozas\\Code\\_Projects\\Galilei\\GalileiBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
