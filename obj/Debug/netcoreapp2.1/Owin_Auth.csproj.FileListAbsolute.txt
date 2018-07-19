@@ -1,0 +1,14 @@
+D:\Programozas\Code\_Tests\C#\Owin_Auth\bin\Debug\netcoreapp2.1\Owin_Auth.deps.json
+D:\Programozas\Code\_Tests\C#\Owin_Auth\bin\Debug\netcoreapp2.1\Owin_Auth.runtimeconfig.json
+D:\Programozas\Code\_Tests\C#\Owin_Auth\bin\Debug\netcoreapp2.1\Owin_Auth.runtimeconfig.dev.json
+D:\Programozas\Code\_Tests\C#\Owin_Auth\bin\Debug\netcoreapp2.1\Owin_Auth.dll
+D:\Programozas\Code\_Tests\C#\Owin_Auth\bin\Debug\netcoreapp2.1\Owin_Auth.pdb
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.csprojAssemblyReference.cache
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.csproj.CoreCompileInputs.cache
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.RazorAssemblyInfo.cache
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.RazorAssemblyInfo.cs
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.AssemblyInfoInputs.cache
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.AssemblyInfo.cs
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.RazorTargetAssemblyInfo.cache
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.dll
+D:\Programozas\Code\_Tests\C#\Owin_Auth\obj\Debug\netcoreapp2.1\Owin_Auth.pdb
