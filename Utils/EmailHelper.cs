@@ -14,7 +14,7 @@ namespace Galilei.Server.Utils
         {
             SmtpClient client = new SmtpClient(Config.Configuration["Email:Host"],int.Parse(Config.Configuration["Email:Port"]));
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("noreply@barrow099.hu","Noreply03");
+            client.Credentials = new NetworkCredential(Config.Configuration["Email:Username"],Config.Configuration["Email:Password"]);
             client.EnableSsl = true;
             
 

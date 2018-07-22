@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Galilei.Server.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Owin_Auth.Id;
 using Owin_Auth.Utils;
@@ -21,13 +23,15 @@ namespace Owin_Auth.Controllers
         private DataContext _context;
         private IValidationManager _validManager;
         private IConfiguration _config;
+        private ILogger<IdController> _logger;
 
-        public IdController(IUserManager userManager, IValidationManager manager, DataContext ctx, IConfiguration config)
+        public IdController(IUserManager userManager, IValidationManager manager, DataContext ctx, IConfiguration config, ILogger<IdController> logger)
         {
             _userManager = userManager;
             _validManager = manager;
             _context = ctx;
             _config = config;
+            _logger = logger;
         }
 
         [Route("register")]
@@ -45,7 +49,8 @@ namespace Owin_Auth.Controllers
                 if (resp == UserRegistrationResult.SUCCESS)
                 {
                     var vid = await _validManager.RegisterUserForValidation(_context, request.Username);
-                    return Ok(new {validationId = vid});
+                    SendValidationEmail(vid,request.Username,request.Email);
+                    return Ok();
                 }else if (resp == UserRegistrationResult.EXISTS)
                 {
                     return BadRequest(new {message = "id.reg.userexists"});
@@ -60,6 +65,23 @@ namespace Owin_Auth.Controllers
                 return this.ReportError(e);
             }
         }
+
+        private void SendValidationEmail(string vid, string username,string email)
+        {
+            string url = "https://" + Request.Host.Host + ":" + (Request.Host.Port ?? 80) + "/api/user/validate/" + vid.ToLower();
+            string emailContent = $@"Hello {username},
+
+Thanks for registering to the Galilei IoT Framework.
+Please activate your account by clicking to the following link. This is required because we have to check if the provided email address is correct.
+Thanks for the cooperation.
+{url}
+
+The Galilei Team";
+
+            EmailHelper.SendEmail("Galilei Mailer Daemon",email,"Please validate your email address",emailContent);
+            _logger.LogInformation("Email sent");
+        }
+
 
         [Route("authenticate")]
         [HttpPost]

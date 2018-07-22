@@ -18,7 +18,9 @@ namespace Owin_Auth.Id
             try
             {
 
-                var ex = (await context.Users.CountAsync()) == 0 ? null :  await context.Users.FirstAsync(user => user.Username == username);
+                var ex = (await context.Users.CountAsync()) == 0 ?
+                    null :
+                    await context.Users.FirstOrDefaultAsync(user => user.Username == username);
                 if (ex != null)
                 {
                     return UserRegistrationResult.EXISTS;
@@ -91,10 +93,18 @@ namespace Owin_Auth.Id
             }
         }
 
-        public async Task<User> GetUserById(DataContext context, int userId)
+        public async Task<User> GetUserByUsername(DataContext context, string username)
         {
-            var usr = await context.Users.FirstOrDefaultAsync(user => user.UserId == userId);
+            var usr = await context.Users.FirstOrDefaultAsync(user => user.Username == username);
             return usr;
+        }
+
+        public async Task ValidateUser(DataContext context,string username)
+        {
+            var usr = await context.Users.FirstOrDefaultAsync(user => user.Username == username);
+            usr.IsVerified = true;
+            context.Users.Update(usr);
+            await context.SaveChangesAsync();
         }
     }
 }

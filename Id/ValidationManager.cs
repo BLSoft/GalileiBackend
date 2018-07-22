@@ -11,7 +11,7 @@ namespace Owin_Auth.Id
     {
         public async Task<string> RegisterUserForValidation(DataContext context,string username)
         {
-            var ex = (await context.UserValidations.CountAsync()) == 0 ? null :  await context.UserValidations.FirstAsync(val => val.Username == username);
+            var ex = (await context.UserValidations.CountAsync()) == 0 ? null :  await context.UserValidations.FirstOrDefaultAsync(val => val.Username == username);
             if (ex != null)
             {
                 throw new Exception("Validation with this id already exists");
@@ -28,10 +28,11 @@ namespace Owin_Auth.Id
             return random;
         }
 
-        public async Task<bool> IsTrueValidation(DataContext context,string id)
+        public async Task<bool> IsLiveValidation(DataContext context,string id)
         {
             var ifExsist = await context.UserValidations.FirstOrDefaultAsync(validation => validation.LongId == id);
-            return ifExsist != null;
+
+            return ifExsist != null && ifExsist.ValidUntil > DateTime.Now;
         }
 
         public async Task<string> GetIdForUsername(DataContext context, string username)
@@ -44,6 +45,11 @@ namespace Owin_Auth.Id
         {
             var val = await context.UserValidations.FirstOrDefaultAsync(validation => validation.Username == username);
             return val;
+        }
+
+        public async Task<UserValidation> GetValidationForId(DataContext context, string longId)
+        {
+            return await context.UserValidations.FirstOrDefaultAsync(validation => validation.LongId == longId);
         }
     }
 }
