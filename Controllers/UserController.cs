@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ namespace Galilei.Server.Controllers
         [Route("Validate/{longId}")]
         public async Task<IActionResult> ValidateUser(string longId)
         {
-
+            return Ok();
         }
 
         [Authorize]

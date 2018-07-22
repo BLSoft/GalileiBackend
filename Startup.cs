@@ -78,6 +78,7 @@ namespace Owin_Auth
             //Auth
             app.UseAuthentication();
 
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             //app.UseHttpsRedirection();
             app.UseMvc();
